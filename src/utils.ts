@@ -8,6 +8,8 @@ interface FCurrencyConf extends FNumberConf {
     prefix: string
 }
 
+const TIMEOUT = 10000
+
 export const utils = {
 
     /**
@@ -80,6 +82,21 @@ export const utils = {
             return [...second, ...first]
         }
         return [...first, ...second]
+    },
+
+    /**
+     *
+     *
+     * @param {Promise<any>} promise
+     * @param {string} error
+     * @param {number} [timeout=TIMEOUT]
+     * @returns {Promise<any>}
+     */
+    timedPromise: async (promise: Promise<any>, error: string, timeout: number = TIMEOUT): Promise<any> => {
+        return Promise.race([
+            promise,
+            new Promise<any>((_, reject) => setTimeout(() => reject(new Error(error)), timeout))
+        ])
     }
 
 }
