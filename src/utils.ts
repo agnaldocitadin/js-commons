@@ -66,7 +66,7 @@ export const utils = {
      * @returns {number}
      */
     percentVariation: (startValue: number, finalValue: number): number => {
-        return startValue && finalValue && ((finalValue - startValue) / startValue) * 100 || 0
+        return ((finalValue - startValue) / (startValue || finalValue)) * 100
     },
 
     /**
@@ -141,7 +141,7 @@ export const utils = {
      * @returns
      */
     nonNull: (field: string, value?: any) => {
-        return { ...value && { [field]: value } }
+        return { ...value !== undefined && { [field]: value } }
     },
 
     /**
